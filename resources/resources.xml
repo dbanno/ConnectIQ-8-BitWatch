@@ -1,0 +1,5 @@
+<resources>
+    <string id="AppName">ConnectIQ-8-BitWatch</string>
+
+    <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
+</resources>
