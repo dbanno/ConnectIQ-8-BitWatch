@@ -10,6 +10,7 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
 	var halfHeart;
 	var fullHeart;
 	var emptyHeart;
+	var isSleep;
     //! Load your resources here
     function onLayout(dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
@@ -34,15 +35,32 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
         var screenY = dc.getHeight();
         var screenX = dc.getWidth();
         var clockTime = Sys.getClockTime();
-        var timeString = Lang.format("$1$:$2$", [clockTime.hour, clockTime.min.format("%.2d")]);
+        
+        var hour = clockTime.hour;
+        //12-hour support
+        if (hour > 12 || hour == 0)
+        {
+	        var deviceSettings = Sys.getDeviceSettings();
+	        if (!deviceSettings.is24Hour) {
+	        	if (hour == 0) {
+	        		hour = 1;
+	        	}
+	        	else {
+	        		hour = hour - 12;
+	        	}
+	        }
+        }
+        var timeString = Lang.format("$1$:$2$", [hour, clockTime.min.format("%.2d")]);
+
       //  var view = View.findDrawableById("TimeLabel");
        // view.setFont(font);
         //view.setText(timeString);
 		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
         dc.drawText(10, 10 , font, timeString, Gfx.TEXT_JUSTIFY_LEFT);
         
+    //Move Bar Hearts
         var activity = Act.getInfo();
-        var moveBar = activity.moveBarLevel.toNumber();
+        var moveBar = activity.moveBarLevel;
         if(moveBar == 0) {
         	dc.drawBitmap(10,screenY-30,fullHeart);
         	dc.drawBitmap(35,screenY-30,fullHeart);
@@ -73,17 +91,45 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
         	dc.drawBitmap(35,screenY-30,emptyHeart);
         	dc.drawBitmap(60,screenY-30,emptyHeart);
         }
-       // dc.drawText(,Gfx.FONT_LARGE, ,Gfx.TEXT_JUSTIFY_LEFT);
+        
+        //Show battery info when Awake
+        if(isSleep == 0){ 
+	    	var stats = Sys.getSystemStats();
+	      	var battery = stats.battery;
+	      	//Change color depending on charge	
+	      	if (battery >= 50){
+	      		dc.setColor(Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT);
+	  		}
+	      	else if ( (battery >= 25) && (battery < 50)){
+	      		dc.setColor(Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT);
+	      	}else{
+	      		dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT);
+	  		}
+	  		//Large Battery Rectangle
+	  		dc.drawRectangle((screenX-100), screenY-30,90,29);
+	  		//Positive battery Terminal
+	  		dc.drawRectangle((screenX-11), screenY-20,5,10);
+	  		//Battery %
+	        dc.drawText((screenX-60), screenY-30, Gfx.FONT_MEDIUM, battery.format("%4.2f") + "%", Gfx.TEXT_JUSTIFY_CENTER);
+    	}
+    	else {
+    		var date = Time.Gregorian.info(Time.now(),0);
+    		var month = date.month;
+    		var day = date.day;
+    		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
+    		dc.drawText((screenX-40), screenY-30, Gfx.FONT_MEDIUM, month + "/" + day, Gfx.TEXT_JUSTIFY_CENTER);
+    	}
 
         
     }
 
     //! The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() {
-    }
-
+    	isSleep = 0;
+	}
     //! Terminate any active timers and prepare for slow updates.
     function onEnterSleep() {
+    	isSleep = 1;
     }
 
 }
