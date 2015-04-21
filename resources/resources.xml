@@ -1,5 +1,14 @@
 <resources>
     <string id="AppName">ConnectIQ-8-BitWatch</string>
 
-    <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
+	<bitmaps>
+	
+    	<bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
+    	<bitmap id="id_FullHeart" filename="images/FullHeart.png"/>
+    	<bitmap id="id_HalfHeart" filename="images/HalfHeart.png"/>
+    	<bitmap id="id_EmptyHeart" filename="images/EmptyHeart.png"/>
+    </bitmaps>
+    <fonts>
+    	<font id="id_font_Retro" filename="fonts/RetroFont.fnt"/>
+    </fonts>
 </resources>
