@@ -43,20 +43,24 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
 	        var deviceSettings = Sys.getDeviceSettings();
 	        if (!deviceSettings.is24Hour) {
 	        	if (hour == 0) {
-	        		hour = 1;
+	        		hour = 12;
 	        	}
 	        	else {
 	        		hour = hour - 12;
 	        	}
 	        }
         }
-        var timeString = Lang.format("$1$:$2$", [hour, clockTime.min.format("%.2d")]);
+        var minute = clockTime.min.toString();
+        if (minute.toNumber() < 10) {
+        	minute = "0" + minute;
+        }
+        var timeString = Lang.format("$1$:$2$", [hour, minute]);
 
       //  var view = View.findDrawableById("TimeLabel");
        // view.setFont(font);
         //view.setText(timeString);
 		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(10, 10 , font, timeString, Gfx.TEXT_JUSTIFY_LEFT);
+        dc.drawText(screenX/2, 10 , font, timeString, Gfx.TEXT_JUSTIFY_CENTER);
         
     //Move Bar Hearts
         var activity = Act.getInfo();

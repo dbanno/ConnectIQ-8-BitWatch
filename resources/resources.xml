@@ -9,6 +9,6 @@
     	<bitmap id="id_EmptyHeart" filename="images/EmptyHeart.png"/>
     </bitmaps>
     <fonts>
-    	<font id="id_font_Retro" filename="fonts/RetroFont.fnt"/>
+    	<font id="id_font_Retro" filename="fonts/RetroFont.fnt" filter="0123456789:/AMP"/>
     </fonts>
 </resources>
