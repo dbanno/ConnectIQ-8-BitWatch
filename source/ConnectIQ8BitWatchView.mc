@@ -112,7 +112,7 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
 	      		dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT);
 	  		}
 	  		//Large Battery Rectangle
-	  		dc.drawRectangle((screenX-100), screenY-30,90,29);
+	  		dc.drawRectangle((screenX-110), screenY-30,100,29);
 	  		//Positive battery Terminal
 	  		dc.drawRectangle((screenX-11), screenY-20,5,10);
 	  		//Battery %
