@@ -62,7 +62,7 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
        // view.setFont(font);
         //view.setText(timeString);
 		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(screenX/2, 10 , font, timeString, Gfx.TEXT_JUSTIFY_CENTER);
+        dc.drawText(screenX/2, 35 , font, timeString, Gfx.TEXT_JUSTIFY_CENTER);
         
     //Move Bar Hearts
         var activity = Act.getInfo();
@@ -126,6 +126,29 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
     		dc.drawText((screenX-40), screenY-30, fontSmall, month + "/" + day, Gfx.TEXT_JUSTIFY_CENTER);
     	}
 
+		//Experience Bar
+		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
+		dc.drawRoundedRectangle(10,5,screenX-20,15,5);
+		//Steps / Goal
+		dc.drawText((screenX/2), 20, fontSmall, activity.steps.toString() + "/" + activity.stepGoal.toString(), Gfx.TEXT_JUSTIFY_CENTER);
+		
+		//Fill in EXP bar
+		var goalPct = (activity.steps.toFloat() / activity.stepGoal.toFloat());
+		if (goalPct >= 1) { 
+			goalPct = 1;
+			dc.setColor(Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT);
+		}
+		else if (goalPct <= .33){
+			dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT);
+		}
+		else if (goalPct > .33 && goalPct <= .66) {
+			dc.setColor(Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT);
+		}
+		else if (goalPct > .66) {
+			dc.setColor(Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT);
+		}
+		dc.fillRoundedRectangle(10,5, (screenX-20) * goalPct , 15, 5);
+		
         
     }
 
