@@ -7,6 +7,7 @@ using Toybox.ActivityMonitor as Act;
 class ConnectIQ8BitWatchView extends Ui.WatchFace {
 
 	var font;
+	var fontSmall;
 	var halfHeart;
 	var fullHeart;
 	var emptyHeart;
@@ -15,6 +16,7 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
     function onLayout(dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
         font = Ui.loadResource(Rez.Fonts.id_font_Retro);
+        fontSmall = Ui.loadResource(Rez.Fonts.id_font_Retro_Small);
         halfHeart = Ui.loadResource(Rez.Drawables.id_HalfHeart);
         fullHeart = Ui.loadResource(Rez.Drawables.id_FullHeart);
         emptyHeart = Ui.loadResource(Rez.Drawables.id_EmptyHeart);
@@ -114,14 +116,14 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
 	  		//Positive battery Terminal
 	  		dc.drawRectangle((screenX-11), screenY-20,5,10);
 	  		//Battery %
-	        dc.drawText((screenX-60), screenY-30, Gfx.FONT_MEDIUM, battery.format("%4.2f") + "%", Gfx.TEXT_JUSTIFY_CENTER);
+	        dc.drawText((screenX-60), screenY-30,fontSmall, battery.format("%4.2f") + "%", Gfx.TEXT_JUSTIFY_CENTER);
     	}
     	else {
     		var date = Time.Gregorian.info(Time.now(),0);
     		var month = date.month;
     		var day = date.day;
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-    		dc.drawText((screenX-40), screenY-30, Gfx.FONT_MEDIUM, month + "/" + day, Gfx.TEXT_JUSTIFY_CENTER);
+    		dc.drawText((screenX-40), screenY-30, fontSmall, month + "/" + day, Gfx.TEXT_JUSTIFY_CENTER);
     	}
 
         
