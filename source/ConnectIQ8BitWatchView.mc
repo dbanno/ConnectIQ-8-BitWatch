@@ -13,6 +13,9 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
 	var emptyHeart;
 	var isSleep;
     //! Load your resources here
+
+//TODO: https://forums.garmin.com/showthread.php?228721-In-App-Device-Detection
+//Add support for Round Watches.
     function onLayout(dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
         font = Ui.loadResource(Rez.Fonts.id_font_Retro);
