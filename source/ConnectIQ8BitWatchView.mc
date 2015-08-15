@@ -55,7 +55,7 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
 	        	}
 	        }
         }
-        var minute = clockTime.min.toString();
+       var minute = clockTime.min.toString();
         if (minute.toNumber() < 10) {
         	minute = "0" + minute;
         }
@@ -126,7 +126,13 @@ class ConnectIQ8BitWatchView extends Ui.WatchFace {
     		var month = date.month;
     		var day = date.day;
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-    		dc.drawText((screenX-40), screenY-30, fontSmall, month + "/" + day, Gfx.TEXT_JUSTIFY_CENTER);
+    		var formattedDate = month + "/" + day;
+    		if(System.getDeviceSettings().distanceUnits == System.UNIT_METRIC)
+    		{
+    			formattedDate = day + "/" + month;
+    		}
+
+    		dc.drawText((screenX-40), screenY-30, fontSmall, formattedDate, Gfx.TEXT_JUSTIFY_CENTER);
     	}
 
 		//Experience Bar
